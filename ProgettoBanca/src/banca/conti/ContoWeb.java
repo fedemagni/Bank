@@ -1,6 +1,5 @@
 package banca.conti;
 
-import Exception.NoPrelievoException;
 import banca.Persona;
 
 public class ContoWeb extends ContoCorrente{
@@ -9,7 +8,5 @@ public class ContoWeb extends ContoCorrente{
 	
 	public ContoWeb(Persona p, String iban) {
 		super(p, iban);
-	}
-
-	
+	}	
 }

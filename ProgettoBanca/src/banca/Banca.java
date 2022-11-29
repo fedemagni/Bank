@@ -53,7 +53,7 @@ public class Banca {
 	}
 	
 //dato iban trovare conto
-	public ContoCorrente getConto(String iban) {
+	public ContoCorrente getConto(String iban) { // da rifareeeee
 		for(int i=0;i<contiAttivi;i++) {
 			ContoCorrente c = elenco.get(iban);
 			if(iban.equals(c.getIban())) {
@@ -128,15 +128,12 @@ public class Banca {
 		String ibanfe=fe.getIban();
 		System.out.println(ibanni);
 		System.out.println(ibanfe);
-		//System.out.println(b.numeroMaxConti);
-		//System.out.println(b.getConto(f).getCf());
+		System.out.println(b.numeroMaxConti);
+		System.out.println(b.getConto(ibanfe).getPersona().getCf());
+		
 		ni.deposita(1000);
-		
 		fe.deposita(10000);
-		//System.out.println(b2.getConto(ibanni));
 		
-		
-
 		
 		System.out.println(b2.totaleSaldi());
 		b2.stampaElencoConti();		
