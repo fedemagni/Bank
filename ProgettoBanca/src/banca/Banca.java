@@ -7,6 +7,9 @@ import java.util.Map.Entry;
 
 import Exception.InvalidIbanException;
 import banca.conti.ContoCorrente;
+import banca.conti.ContoDeposito;
+import banca.conti.ContoWeb;
+import banca.conti.TypeConto;
 
 public class Banca {
 	private String nome;
@@ -33,13 +36,24 @@ public class Banca {
 		}
 		return (radiceIban+s+ca);
 	}
-	public ContoCorrente nuovoConto(Persona p) {
-		
+	private String nuovoConto(Persona p,TypeConto r) {
 		String iban=this.genIban();
-		ContoCorrente c=new ContoCorrente(p,iban);
-		elenco.put(iban, c);
+		ContoCorrente cc;		
+		switch(r) {
+			case CONTOWEB:
+				cc=new ContoWeb(p,iban);
+				break;
+				
+			case CONTODEPOSITO:
+				cc=new ContoDeposito(p,iban);
+				break;
+				
+			default:
+				cc=new ContoCorrente(p,iban);
+		}
+		elenco.put(iban, cc);
 		this.contiAttivi=contiAttivi+1;
-		return c;
+		return iban;
 		
 	}
 
@@ -110,31 +124,13 @@ public class Banca {
 		
 		Banca b=new Banca("BCC","IT00000000012",10000);
 		Persona Nico=new Persona("Nico","Galli","nclgll1234567");
-		ContoCorrente ni=b.nuovoConto(Nico);
+		String ibanni=b.nuovoConto(Nico,TypeConto.CONTOCORRENTE);
 		Banca b2=new Banca("ISP","IT23456787654", 99999);
 		Persona Fede=new Persona("Banca","Magni","mgnfrc23456wer");
-		ContoCorrente fe=b2.nuovoConto(Fede);
-		
-		Persona[] elencoPersona=new Persona[11];
-		ContoCorrente[] elencoContiGen=new ContoCorrente[11];
-		for(int i=0;i<10;i++) {
-			elencoPersona[i]=new Persona("Fede"+i,"Magni"+i,"mgnfrc23456wer"+i);
-			elencoContiGen[i]=b2.nuovoConto(elencoPersona[i]);
-		}
-		
-		String ibanni=ni.getIban();
-		String ibanfe=fe.getIban();
-		System.out.println(ibanni);
-		System.out.println(ibanfe);
-		System.out.println(b.numeroMaxConti);
-		System.out.println(b2.getConto(ibanfe).getPersona().getCf());
-		
-		ni.deposita(1000);
-		fe.deposita(10000);
+		String ibanfe=b2.nuovoConto(Fede,TypeConto.CONTOCORRENTE);
 		
 		
-		System.out.println(b2.totaleSaldi());
-		b2.stampaElencoConti();		
+		System.out.println(ibanfe +"\n"+ibanni);		
 			
 	}
 

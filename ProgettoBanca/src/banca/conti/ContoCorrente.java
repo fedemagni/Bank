@@ -6,7 +6,7 @@ import banca.Persona;
 public class ContoCorrente {
 	private Persona p;
 	private String iban;
-	private double saldo;
+	protected double saldo;
 	
 	public ContoCorrente(Persona p, String iban) {
 		
@@ -17,7 +17,7 @@ public class ContoCorrente {
 	} 
 	 
 	
-	public void preleva (double value) throws SaldoInsufficienteException{
+	public void preleva (double value) throws Exception{
 		if(saldo-value>=0) {
 			saldo=saldo-value;	
 		}else {
