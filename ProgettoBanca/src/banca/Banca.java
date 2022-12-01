@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import Exception.InvalidIbanException;
 import banca.conti.ContoCorrente;
 
 public class Banca {
@@ -53,15 +54,12 @@ public class Banca {
 	}
 	
 //dato iban trovare conto
-	public ContoCorrente getConto(String iban) { // da rifareeeee
-		for(int i=0;i<contiAttivi;i++) {
-			ContoCorrente c = elenco.get(iban);
-			if(iban.equals(c.getIban())) {
-				return c;
-			}		
-		}
-		System.out.println("Conto inesistente");
-		return null;
+	public ContoCorrente getConto(String iban) throws InvalidIbanException{
+		ContoCorrente c=elenco.get(iban);
+		if(c==null) {
+			throw new InvalidIbanException();
+		}else	
+		return c;
 	}
 
 	public boolean bonifico(Banca a,String iban1, String iban2, double value)  throws Exception{
@@ -129,7 +127,7 @@ public class Banca {
 		System.out.println(ibanni);
 		System.out.println(ibanfe);
 		System.out.println(b.numeroMaxConti);
-		System.out.println(b.getConto(ibanfe).getPersona().getCf());
+		System.out.println(b2.getConto(ibanfe).getPersona().getCf());
 		
 		ni.deposita(1000);
 		fe.deposita(10000);

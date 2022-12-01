@@ -17,7 +17,7 @@ public class ContoCorrente {
 	} 
 	 
 	
-	public void preleva (double value) throws Exception{//!!!!!!!!!!!!!!!
+	public void preleva (double value) throws SaldoInsufficienteException{
 		if(saldo-value>=0) {
 			saldo=saldo-value;	
 		}else {
