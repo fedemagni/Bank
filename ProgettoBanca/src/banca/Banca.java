@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import Exception.ContoInattivoException;
 import Exception.InvalidIbanException;
 import banca.conti.ContoCorrente;
 import banca.conti.ContoDeposito;
@@ -96,7 +97,8 @@ public class Banca {
 		}
 		return true;
 	}
-	public double totaleSaldi() {
+	public double totaleSaldi2() {
+
 		double saldoBanca=0;
 		Iterator it= elenco.entrySet().iterator();
 		while(it.hasNext()) {
@@ -107,7 +109,16 @@ public class Banca {
 		}
 		return saldoBanca;
 	}
-	public void stampaElencoConti() {
+	public double totaleSaldi() {
+		double totale=0;
+		for(String iban:elenco.keySet()) {
+			double saldo=elenco.get(iban).getSaldo();
+			totale +=saldo;
+		}
+		return totale;
+	}
+	
+ 	public void stampaElencoConti() {
 		
 		Iterator it= elenco.entrySet().iterator();
 		while(it.hasNext()) {
@@ -119,6 +130,16 @@ public class Banca {
 		}
 	}
 	
+	public void LogInContoWeb(ContoWeb c) throws ContoInattivoException {
+		if(c.isAttivo()==false) {
+			throw new ContoInattivoException();
+		}else if(c.isLogged()==false){
+			
+		}
+	}
+	public void LogOutContoWeb(ContoWeb c) {
+		
+	}
 
 	public static void main(String[] args) throws Exception {
 		
