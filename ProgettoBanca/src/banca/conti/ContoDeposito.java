@@ -10,8 +10,15 @@ public class ContoDeposito extends ContoCorrente{
 		super(p, iban);
 	}
 
-	public void preleva(double value) throws NoPrelievoException{
-		throw new NoPrelievoException();
-		
+	
+	
+	public void operazione(double value) throws Exception{
+		if(value>=0) {
+			deposita(value); 
+			}
+		if(value<0) {		
+			throw new NoPrelievoException("Prelievo non autorizzato.");
+		}
 	}
 }
+

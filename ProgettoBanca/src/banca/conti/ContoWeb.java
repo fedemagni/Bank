@@ -1,6 +1,7 @@
 package banca.conti;
 
-import Exception.ContoInattivoException;
+import Exception.ImpostaPasswordException;
+import Exception.LogInException;
 import Exception.SaldoInsufficienteException;
 import banca.Persona;
 
@@ -14,14 +15,46 @@ public class ContoWeb extends ContoCorrente{
 		super(p, iban);
 		this.password="changeme";
 		this.attivo=false;	
-	}	
+		this.logged=false;
+	}
+	public void primoAccesso() throws ImpostaPasswordException{
+		try{
+			if(attivo==false) {
+				throw new ImpostaPasswordException();
+			}
+		}catch (ImpostaPasswordException a) {
+			String pass=a.impostaPassword();
+			setPassword(pass);
+			setLogged(true);   //login automatico
+		}
+	}
+	
+	public void logIn() throws LogInException{
+		try{
+			if(logged==false) {
+				throw new LogInException();
+			}
+		}catch (LogInException a) {
+			
+			setLogged(true);
+		}
+	}
+	
+	public void operazione(double value) throws Exception{
+		if(this.attivo==false) {
+			primoAccesso();
+		}else if(this.logged==false){
+			logIn();	                            //FARE    <============
+		}else if(value>=0) {
+				deposita(value); 
+			}
+		else if(value<0) {					
+			preleva(Math.abs(value));
+		}
+	}
 	
 	public void preleva (double value) throws Exception{
-		if(this.attivo==false) {
-			throw new ContoInattivoException();
-		}else if(this.logged==false){
-			//doLogIn();	                            //FARE    <============
-		}else if(saldo-value>=0) {
+		if(saldo-value>=0) {
 			saldo=saldo-value;	
 		}else {
 			throw new SaldoInsufficienteException();	

@@ -1,5 +1,6 @@
 package banca.conti;
 
+import Exception.LogInException;
 import Exception.SaldoInsufficienteException;
 import banca.Persona;
 
@@ -7,7 +8,14 @@ public class ContoCorrente {
 	private Persona p;
 	private String iban;
 	protected double saldo;
+	private boolean logged;
 	
+	public boolean isLogged() {
+		return logged;
+	}
+	public void setLogged(boolean logged) {
+		this.logged = logged;
+	}
 	public ContoCorrente(Persona p, String iban) {
 		
 		this.p = p;
@@ -15,8 +23,25 @@ public class ContoCorrente {
 		saldo = 0;
 		
 	} 
+	public void logIn() throws LogInException{
+		try{
+			if(logged==false) {
+				throw new LogInException();
+			}
+		}catch (LogInException a) {
+			
+			setLogged(true);
+		}
+	}
 	 
-	
+	public void operazione(double value) throws Exception{
+		if(value>=0) {
+			deposita(value); 
+			}
+		if(value<0) {					
+			preleva(Math.abs(value));
+		}
+	}
 	public void preleva (double value) throws Exception{
 		if(saldo-value>=0) {
 			saldo=saldo-value;	

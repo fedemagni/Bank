@@ -7,6 +7,7 @@ import java.util.Map.Entry;
 
 import Exception.ContoInattivoException;
 import Exception.InvalidIbanException;
+import Exception.LogInException;
 import banca.conti.ContoCorrente;
 import banca.conti.ContoDeposito;
 import banca.conti.ContoWeb;
@@ -57,15 +58,15 @@ public class Banca {
 		return iban;
 		
 	}
-
+	public void logIn(ContoCorrente c) throws LogInException {
+		c.logIn();
+	}
+	
 	public void movimentoConto(ContoCorrente c,double value)throws Exception{
-		
-		if(value>=0) {
-			c.deposita(Math.abs(value)); //(Perchè abs? Perchè no.) Da cancellare.
-			}
-		if(value<0) {					 //uguale a zero non ha senso può creare problemi
-			c.preleva(Math.abs(value));
-		}	
+		if(value!=0) {
+			c.operazione(value);	
+		}else
+			throw new Exception();
 	}
 	
 //dato iban trovare conto
@@ -149,7 +150,7 @@ public class Banca {
 		Banca b2=new Banca("ISP","IT23456787654", 99999);
 		Persona Fede=new Persona("Banca","Magni","mgnfrc23456wer");
 		String ibanfe=b2.nuovoConto(Fede,TypeConto.CONTOCORRENTE);
-		
+		ContoCorrente c=b.getConto(ibanni);
 		
 		System.out.println(ibanfe +"\n"+ibanni);		
 			

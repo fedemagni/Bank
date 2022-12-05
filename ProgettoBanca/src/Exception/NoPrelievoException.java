@@ -2,8 +2,11 @@ package Exception;
 
 public class NoPrelievoException extends Exception{
 	
-	public NoPrelievoException() {
-		System.out.println("Prelievo non autorizzato.");
+
+
+	public NoPrelievoException(String message) {
+		super(message);
+		
 	}
 	
 }
