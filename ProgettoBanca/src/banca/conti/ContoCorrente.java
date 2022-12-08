@@ -1,14 +1,29 @@
 package banca.conti;
 
+import java.util.ArrayList;
+
 import Exception.LogInException;
 import Exception.SaldoInsufficienteException;
 import banca.Persona;
+import banca.accountable.Accountable;
+import banca.accountable.Stipendio;
 
 public class ContoCorrente {
 	private Persona p;
 	private String iban;
 	protected double saldo;
 	private boolean logged;
+	private ArrayList<Accountable> accountable; 
+	
+	public void addAccountable(Accountable r) {
+		accountable.add(r);
+	}
+	
+	public void fineMese() throws Exception {
+		for(Accountable acc:this.accountable) {
+			operazione(acc.getValue());
+		}
+	}
 	
 	public boolean isLogged() {
 		return logged;
@@ -21,6 +36,7 @@ public class ContoCorrente {
 		this.p = p;
 		this.iban = iban;
 		saldo = 0;
+		this.accountable= new ArrayList<Accountable>();
 		
 	} 
 	public void logIn() throws LogInException{
@@ -34,7 +50,7 @@ public class ContoCorrente {
 		}
 	}
 	 
-	public void operazione(double value) throws Exception{
+	public void operazione(double value) throws SaldoInsufficienteException,Exception{
 		if(value>=0) {
 			deposita(value); 
 			}
@@ -42,7 +58,7 @@ public class ContoCorrente {
 			preleva(Math.abs(value));
 		}
 	}
-	public void preleva (double value) throws Exception{
+	public void preleva (double value) throws SaldoInsufficienteException{
 		if(saldo-value>=0) {
 			saldo=saldo-value;	
 		}else {

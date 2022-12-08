@@ -98,18 +98,18 @@ public class Banca {
 		}
 		return true;
 	}
-	public double totaleSaldi2() {
-
-		double saldoBanca=0;
-		Iterator it= elenco.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry<String,ContoCorrente> entry = (Map.Entry)it.next();
-			
-			ContoCorrente c = entry.getValue();
-			saldoBanca=saldoBanca+c.getSaldo();
-		}
-		return saldoBanca;
-	}
+//	public double totaleSaldi2() {
+//
+//		double saldoBanca=0;
+//		Iterator it= elenco.entrySet().iterator();
+//		while(it.hasNext()) {
+//			Map.Entry<String,ContoCorrente> entry = (Map.Entry)it.next();
+//			
+//			ContoCorrente c = entry.getValue();
+//			saldoBanca=saldoBanca+c.getSaldo();
+//		}
+//		return saldoBanca;
+//	}
 	public double totaleSaldi() {
 		double totale=0;
 		for(String iban:elenco.keySet()) {
