@@ -20,6 +20,7 @@ public class ContoCorrente {
 	}
 	
 	public void fineMese() throws Exception {
+		
 		for(Accountable acc:this.accountable) {
 			operazione(acc.getValue());
 		}

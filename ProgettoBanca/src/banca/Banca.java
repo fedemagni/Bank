@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import Exception.ContoInattivoException;
 import Exception.InvalidIbanException;
 import Exception.LogInException;
+import Exception.SaldoInsufficienteException;
 import banca.conti.ContoCorrente;
 import banca.conti.ContoDeposito;
 import banca.conti.ContoWeb;
@@ -76,6 +77,12 @@ public class Banca {
 			throw new InvalidIbanException();
 		}else	
 		return c;
+	}
+	public void fineMese() throws SaldoInsufficienteException,Exception {
+		for(String iban:elenco.keySet()) {
+			elenco.get(iban).fineMese();
+			
+		}
 	}
 
 	public boolean bonifico(Banca a,String iban1, String iban2, double value)  throws Exception{
